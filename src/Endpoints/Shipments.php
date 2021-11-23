@@ -24,15 +24,10 @@ class Shipments extends BaseEndpoint implements ShouldAuthenticate
             'label_id' => $response->pieces[0]->labelId,
         ]);
 
-        collect($response->pieces)->each(function ($item) use ($shipment) {
-            $shipment->pieces->add(new ShipmentPiece([
-                'label_id' => $item->labelId,
-                'label_type' => $item->labelType,
-                'parcel_type' => $item->parcelType,
-                'piece_number' => $item->pieceNumber,
-                'tracker_code' => $item->trackerCode,
-            ]));
-        });
+        $shipment = $this->getPieces($response->pieces, $shipment);
+        if (isset($response->returnShipment)) {
+            $shipment = $this->getPieces($response->returnShipment->pieces, $shipment);
+        }
 
         return $shipment;
     }
@@ -43,5 +38,20 @@ class Shipments extends BaseEndpoint implements ShouldAuthenticate
             'shipmentId' => Uuid::uuid4()->toString(),
             'accountId' => $this->apiClient->authentication->getAccessToken()->getAccountId(),
         ], $parcel->toArray()));
+    }
+
+    private function getPieces(array $pieces, ShipmentResource $shipment): ShipmentResource
+    {
+        collect($pieces)->each(function ($item) use ($shipment) {
+            $shipment->pieces->add(new ShipmentPiece([
+                'label_id' => $item->labelId,
+                'label_type' => $item->labelType,
+                'parcel_type' => $item->parcelType,
+                'piece_number' => $item->pieceNumber,
+                'tracker_code' => $item->trackerCode,
+            ]));
+        });
+
+        return $shipment;
     }
 }
