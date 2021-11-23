@@ -41,6 +41,13 @@ class Parcel extends BaseResource
         return $this;
     }
 
+    public function labelDescription2(string $value): self
+    {
+        $this->options->setDescription2Attribute($value);
+
+        return $this;
+    }
+
     public function mailboxpackage(): self
     {
         $this->options->setMailboxPackage();

@@ -18,6 +18,9 @@ class ShipmentOptions extends BaseResource
     /** @var string */
     public $label_description;
 
+    /** @var string */
+    public $label_description2;
+
     /** @var bool */
     public $only_recipient;
 
@@ -65,6 +68,21 @@ class ShipmentOptions extends BaseResource
     public function setDescriptionAttribute(string $value): void
     {
         $this->setLabelDescriptionAttribute($value);
+    }
+
+    public function getDescription2Attribute(): string
+    {
+        return $this->label_description2;
+    }
+
+    public function setLabelDescription2Attribute(string $value): void
+    {
+        $this->label_description2 = Str::limit(trim($value), 70, '');
+    }
+
+    public function setDescription2Attribute(string $value): void
+    {
+        $this->setLabelDescription2Attribute($value);
     }
 
     public function setMailboxPackage(): void
@@ -118,6 +136,12 @@ class ShipmentOptions extends BaseResource
                 return $collection->push([
                     'key' => 'REFERENCE',
                     'input' => $this->label_description,
+                ]);
+            })
+            ->when(! empty($this->label_description2), function ($collection) {
+                return $collection->push([
+                    'key' => 'REFERENCE2',
+                    'input' => $this->label_description2,
                 ]);
             })
             ->when($this->signature, function ($collection) {
