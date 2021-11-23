@@ -13,7 +13,7 @@ class Labels extends BaseEndpoint implements ShouldAuthenticate
      * @param  \Mvdnbrk\DhlParcel\Resources\Shipment|string  $value
      * @return string
      */
-    public function get($value, string $acceptType = 'application/pdf')
+    public function get($value, string $acceptType = 'pdf')
     {
         if ($value instanceof Shipment) {
             $value = $value->label_id;
@@ -23,7 +23,7 @@ class Labels extends BaseEndpoint implements ShouldAuthenticate
             'GET',
             'labels/'.$value,
             null,
-            ['Accept' => $acceptType]
+            ['Accept' => 'application/'.$acceptType]
         );
 
         return $response;

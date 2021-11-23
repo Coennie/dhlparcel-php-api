@@ -56,7 +56,7 @@ abstract class BaseEndpoint
             $this->getRequestHeaders($requestHeaders)
         );
 
-        if (collect($response->getHeader('Content-Type'))->first() == 'application/pdf') {
+        if (substr(collect($response->getHeader('Content-Type'))->first(), 0, strlen('application/')) === 'application/') {
             return $response->getBody()->getContents();
         }
 
