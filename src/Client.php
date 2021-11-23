@@ -17,6 +17,7 @@ use Mvdnbrk\DhlParcel\Exceptions\DhlParcelException;
 class Client
 {
     const API_ENDPOINT = 'https://api-gw.dhlparcel.nl';
+    const API_ENDPOINT_ACCEPT = 'https://api-gw-accept.dhlparcel.nl/';
 
     /** @var string */
     protected $apiEndpoint = self::API_ENDPOINT;
@@ -123,6 +124,13 @@ class Client
     public function setUserId(string $value): self
     {
         $this->userId = trim($value);
+
+        return $this;
+    }
+
+    public function setSandbox(bool $sandbox): self
+    {
+        $this->apiEndpoint = $sandbox ? self::API_ENDPOINT_ACCEPT : self::API_ENDPOINT;
 
         return $this;
     }
