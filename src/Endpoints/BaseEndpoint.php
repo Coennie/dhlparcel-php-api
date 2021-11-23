@@ -56,7 +56,7 @@ abstract class BaseEndpoint
             $this->getRequestHeaders($requestHeaders)
         );
 
-        if (substr(collect($response->getHeader('Content-Type'))->first(), 0, strlen('application/')) === 'application/') {
+        if (collect($response->getHeader('Content-Type'))->first() !== 'application/json') {
             return $response->getBody()->getContents();
         }
 
