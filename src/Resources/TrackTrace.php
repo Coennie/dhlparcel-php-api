@@ -22,7 +22,7 @@ class TrackTrace extends BaseResource
         $phases = ['DATA_RECEIVED', 'UNDERWAY', 'IN_DELIVERY', 'DELIVERED'];
         foreach ($phases as $phase) {
             $key = array_search($phase, array_column($attributes['view']->phaseDisplay, 'phase'));
-            if ($key !== false && $attributes['view']->phaseDisplay[$key]['completed'] === true) {
+            if ($key !== false && $attributes['view']->phaseDisplay[$key]->completed === true) {
                 $this->status = $phase;
             }
         }
