@@ -14,7 +14,7 @@ class TrackTrace extends BaseEndpoint
         );
 
         return new TrackTraceResource(
-            collect(collect($response))->all()
+            collect(collect($response)->all())->all()
         );
     }
 }
