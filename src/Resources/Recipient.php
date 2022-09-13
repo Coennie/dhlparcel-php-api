@@ -14,6 +14,9 @@ class Recipient extends Address
     public $last_name;
 
     /** @var string */
+    public $additional_name;
+
+    /** @var string */
     public $email;
 
     /** @var string */
@@ -31,6 +34,7 @@ class Recipient extends Address
                 'company_name' => '',
                 'first_name' => '',
                 'last_name' => '',
+                'additional_name' => '',
                 'email' => '',
                 'phone' => '',
             ])
@@ -46,6 +50,7 @@ class Recipient extends Address
             'firstName' => $this->first_name,
             'lastName' => $this->last_name,
             'companyName' => $this->company_name,
+            'additionalName' => $this->additional_name,
         ])
             ->filter()
             ->all();
